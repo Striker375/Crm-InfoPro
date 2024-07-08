@@ -1,13 +1,14 @@
 package crm.crm.service;
 
+import crm.crm.DTO.CalenderEventDTO;
 import crm.crm.entity.CalenderEvent;
 
 import java.util.List;
 
 public interface CalendarEventService {
-    List<CalenderEvent> getAllCalendarEvents();
-    CalenderEvent getCalendarEventById(Long id);
-    CalenderEvent saveCalendarEvent(CalenderEvent calendarEvent);
+    List<CalenderEventDTO> getAllCalenderEvents();
+    CalenderEventDTO getCalendarEventById(Long id);
+    CalenderEventDTO createCalenderEvent(CalenderEventDTO calendarEventDTO);
     void deleteCalendarEvent(Long id);
-    CalenderEvent updateCalendarEvent(Long id, CalenderEvent calendarEventDetails);
+    CalenderEventDTO updateCalendarEvent(Long id, CalenderEventDTO calendarEventDTO);
 }

@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.Date;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,8 +20,9 @@ public class CalenderEvent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private LocalDate startTime;
-    private LocalDateTime endTime;
+    private String description;
+    private Date startTime;
+    private Date endTime;
 
     // Autres champs pertinents
 

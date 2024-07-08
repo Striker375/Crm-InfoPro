@@ -1,31 +1,40 @@
 package crm.crm.service;
 
+import crm.crm.DTO.ClientDTO;
 import crm.crm.Exception.ResourceNotFoundException;
 import crm.crm.entity.Client;
+import crm.crm.mapper.ClientMapper;
 import crm.crm.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientServiceImpl implements ClientService {
     @Autowired
     private ClientRepository clientRepository;
+    private final ClientMapper clientMapper = ClientMapper.INSTANCE;
 
     @Override
-    public List<Client> getAllClients() {
-        return clientRepository.findAll();
+    public List<ClientDTO> getAllClients() {
+        return clientRepository.findAll().stream()
+                .map(clientMapper::clientToClientDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Client getClientById(Long id) {
-        return clientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+    public ClientDTO getClientById(Long id) {
+        Client client = clientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+        return clientMapper.clientToClientDTO(client);
     }
 
     @Override
-    public Client saveClient(Client client) {
-        return clientRepository.save(client);
+    public ClientDTO createClient(ClientDTO clientDTO) {
+        Client client = clientMapper.clientDTOToClient(clientDTO);
+        Client savedClient = clientRepository.save(client);
+        return clientMapper.clientToClientDTO(savedClient);
     }
 
     @Override
@@ -35,11 +44,21 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client updateClient(Long id, Client clientDetails) {
-        Client client = clientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Client not found"));
-        client.setName(clientDetails.getName());
-        client.setEmail(clientDetails.getEmail());
+    public ClientDTO updateClient(Long id, ClientDTO clientDTO) {
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+
+        // Use the mapper to update fields in the existing client entity
+        client.setName(clientDTO.getName());
+        client.setEmail(clientDTO.getEmail());
+        client.setPhoneNumber(clientDTO.getPhoneNumber());
+        client.setAdresse(clientDTO.getAdresse());
         // autres champs
-        return clientRepository.save(client);
+
+        // Save the updated client entity
+        Client updatedClient = clientRepository.save(client);
+
+        // Map the saved client entity back to ClientDTO
+        return ClientMapper.INSTANCE.clientToClientDTO(updatedClient);
     }
 }
