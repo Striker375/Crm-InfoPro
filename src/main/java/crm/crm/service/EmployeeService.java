@@ -1,13 +1,14 @@
 package crm.crm.service;
 
+import crm.crm.DTO.EmployeeDTO;
 import crm.crm.entity.Employee;
 
 import java.util.List;
 
 public interface EmployeeService {
-    List<Employee> getAllEmployees();
-    Employee getEmployeeById(Long id);
-    Employee saveEmployee(Employee employee);
+    List<EmployeeDTO> getAllEmployees();
+    EmployeeDTO getEmployeeById(Long id);
+    EmployeeDTO createEmployee(EmployeeDTO employeeDTO);
+    EmployeeDTO updateEmployee(Long id, EmployeeDTO employeeDTO);
     void deleteEmployee(Long id);
-    Employee updateEmployee(Long id, Employee employeeDetails);
 }

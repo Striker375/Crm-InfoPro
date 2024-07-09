@@ -1,14 +1,15 @@
 package crm.crm.service;
 
+import crm.crm.DTO.ContratDTO;
 import crm.crm.entity.Contrat;
 
 import java.util.List;
 
 public interface ContratService {
-    List<Contrat> getAllContracts();
-    Contrat getContractById(Long id);
-    Contrat saveContract(Contrat contract);
+    List<ContratDTO> getAllContracts();
+    ContratDTO getContractById(Long id);
+    ContratDTO createContract(ContratDTO contratDTO);
     void deleteContract(Long id);
-    Contrat updateContract(Long id, Contrat contractDetails);
+    ContratDTO updateContract(Long id, ContratDTO contractDTO);
 }
 

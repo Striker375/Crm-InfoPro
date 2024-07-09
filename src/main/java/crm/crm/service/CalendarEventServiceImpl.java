@@ -8,16 +8,16 @@ import crm.crm.repository.CalenderEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public abstract class CalendarEventServiceImpl implements CalendarEventService {
+public class CalendarEventServiceImpl implements CalendarEventService {
     @Autowired
     private CalenderEventRepository calendarEventRepository;
+
     private CalendarEventMapper calendarEventMapper ;
-    @Autowired
-    private CalenderEventRepository calenderEventRepository;
 
     @Override
     public List<CalenderEventDTO> getAllCalenderEvents() {
@@ -28,15 +28,15 @@ public abstract class CalendarEventServiceImpl implements CalendarEventService {
 
     @Override
     public CalenderEventDTO getCalendarEventById(Long id) {
-        CalenderEvent calendarEvent = calenderEventRepository.findById(id)
+        CalenderEvent calendarEvent = calendarEventRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("CalendarEvent not found"));
         return calendarEventMapper.calenderEventToCalenderEventDTO(calendarEvent);
     }
 
 
-    public CalenderEventDTO createCalendarEvent(CalenderEventDTO calendarEventDTO) {
+    public CalenderEventDTO createCalendarEvent(CalenderEventDTO calenderEventDTO) {
         // Convert DTO to entity
-        CalenderEvent calendarEvent = calendarEventMapper.calenderEventDTOToCalenderEvent(calendarEventDTO);
+        CalenderEvent calendarEvent = calendarEventMapper.calenderEventDTOToCalenderEvent(calenderEventDTO);
 
         // Save the entity
         CalenderEvent savedCalendarEvent = calendarEventRepository.save(calendarEvent);
@@ -52,7 +52,7 @@ public abstract class CalendarEventServiceImpl implements CalendarEventService {
 
     @Override
     public CalenderEventDTO updateCalendarEvent(Long id, CalenderEventDTO calenderEventDTO) {
-        CalenderEvent calendarEvent = calenderEventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("CalendarEvent not found"));
+        CalenderEvent calendarEvent = calendarEventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("CalendarEvent not found"));
         calendarEvent.setTitle(calenderEventDTO.getTitle());
         calendarEvent.setDescription(calenderEventDTO.getDescription());
         calendarEvent.setStartTime(calenderEventDTO.getStartTime());

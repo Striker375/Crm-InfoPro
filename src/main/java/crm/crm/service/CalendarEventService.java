@@ -8,7 +8,7 @@ import java.util.List;
 public interface CalendarEventService {
     List<CalenderEventDTO> getAllCalenderEvents();
     CalenderEventDTO getCalendarEventById(Long id);
-    CalenderEventDTO createCalenderEvent(CalenderEventDTO calendarEventDTO);
+    CalenderEventDTO createCalendarEvent(CalenderEventDTO calenderEventDTO);
     void deleteCalendarEvent(Long id);
     CalenderEventDTO updateCalendarEvent(Long id, CalenderEventDTO calendarEventDTO);
 }

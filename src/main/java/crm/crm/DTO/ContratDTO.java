@@ -4,10 +4,12 @@ import crm.crm.entity.Employee;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.Date;
+
 @Data
 public class ContratDTO {
     private String details;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Date startDate;
+    private Date endDate;
     private Employee employee;
 }
