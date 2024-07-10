@@ -13,37 +13,37 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/leaverequests")
+@RequestMapping("/leaverequests")
 @AllArgsConstructor
 public class LeaveRequestController {
 
 
     private final LeaveRequestService leaveRequestService;
 
-    @PostMapping
+    @PostMapping("/createLeaveRequest")
     public ResponseEntity<LeaveRequestDTO> createLeaveRequest(@RequestBody LeaveRequestDTO leaveRequestDTO) {
         LeaveRequestDTO createdLeaveRequest = leaveRequestService.createLeaveRequest(leaveRequestDTO);
         return new ResponseEntity<>(createdLeaveRequest, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/updateLeaveRequest/{id}")
     public ResponseEntity<LeaveRequestDTO> updateLeaveRequest(@PathVariable Long id, @RequestBody LeaveRequestDTO leaveRequestDTO) {
         LeaveRequestDTO updatedLeaveRequest = leaveRequestService.updateLeaveRequest(id, leaveRequestDTO);
         return new ResponseEntity<>(updatedLeaveRequest, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/List")
     public List<LeaveRequestDTO> getAllLeaveRequests() {
         return leaveRequestService.getAllLeaveRequests();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getLeaveRequestById/{id}")
     public ResponseEntity<LeaveRequestDTO> getLeaveRequestById(@PathVariable Long id) {
         LeaveRequestDTO leaveRequestDTO = leaveRequestService.getLeaveRequestById(id);
         return new ResponseEntity<>(leaveRequestDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteLeaveRequest/{id}")
     public ResponseEntity<Void> deleteLeaveRequest(@PathVariable Long id) {
         leaveRequestService.deleteLeaveRequest(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

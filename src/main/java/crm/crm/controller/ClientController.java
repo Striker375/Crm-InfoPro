@@ -15,30 +15,30 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
-    @GetMapping
+    @GetMapping("/Client/List")
     public List<ClientDTO> getAllClients() {
         return clientService.getAllClients();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/Client/{id}")
     public ResponseEntity<ClientDTO> getClientById(@PathVariable Long id) {
         ClientDTO clientDTO = clientService.getClientById(id);
         return ResponseEntity.ok(clientDTO);
     }
 
-    @PostMapping
+    @PostMapping("/Client/createClient")
     public ResponseEntity<ClientDTO> createClient(@RequestBody ClientDTO clientDTO) {
         ClientDTO createdClient = clientService.createClient(clientDTO);
         return ResponseEntity.ok(createdClient);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/Client/updateClient/{id}")
     public ResponseEntity<ClientDTO> updateClient(@PathVariable Long id, @RequestBody ClientDTO clientDTO) {
         ClientDTO updatedClient = clientService.updateClient(id, clientDTO);
         return ResponseEntity.ok(updatedClient);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/Client/deleteClient/{id}")
     public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
         clientService.deleteClient(id);
         return ResponseEntity.noContent().build();

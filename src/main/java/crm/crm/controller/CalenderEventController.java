@@ -19,7 +19,7 @@ public class CalenderEventController {
         this.calendarEventService = calendarEventService;
     }
 
-    @GetMapping
+    @GetMapping("/CalenderEvents/List")
     public List<CalenderEventDTO> getAllCalenderEvents() {
         return calendarEventService.getAllCalenderEvents();
     }
@@ -30,19 +30,19 @@ public class CalenderEventController {
         return ResponseEntity.ok(calenderEventDTO);
     }
 
-    @PostMapping
+    @PostMapping("/calenderEvent/create")
     public ResponseEntity<CalenderEventDTO> createCalendarEvent(@RequestBody CalenderEventDTO calenderEventDTO) {
         CalenderEventDTO createdCalenderEvent = calendarEventService.createCalendarEvent(calenderEventDTO);
         return ResponseEntity.ok(createdCalenderEvent);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/calenderEvent/update/{id}")
     public ResponseEntity<CalenderEventDTO> updateCalendarEvent(@PathVariable Long id, @RequestBody CalenderEventDTO calenderEventDTO) {
         CalenderEventDTO updatedCalenderEvent = calendarEventService.updateCalendarEvent(id, calenderEventDTO);
         return ResponseEntity.ok(updatedCalenderEvent);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/calenderEvent/Delete/{id}")
     public ResponseEntity<Void> deleteCalanderEvent(@PathVariable Long id) {
         calendarEventService.deleteCalendarEvent(id);
         return ResponseEntity.noContent().build();

@@ -16,10 +16,7 @@ public class ContratController {
     @Autowired
     private ContratService contractService;
 
-    @Autowired
-    private ContratMapper contractMapper;
-
-    @GetMapping
+    @GetMapping("/List")
     public List<ContratDTO> getAllContracts() {
         return contractService.getAllContracts();
     }
@@ -30,17 +27,17 @@ public class ContratController {
         return ResponseEntity.ok(contractDTO);
     }
 
-    @PostMapping
+    @PostMapping("/createContrat")
     public ContratDTO createContract(@RequestBody ContratDTO contractDTO) {
         return contractService.createContract(contractDTO);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/updateContrat/{id}")
     public ContratDTO updateContract(@PathVariable Long id, @RequestBody ContratDTO contractDTO) {
         return contractService.updateContract(id, contractDTO);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteContrat/{id}")
     public ResponseEntity<Void> deleteContract(@PathVariable Long id) {
         contractService.deleteContract(id);
         return ResponseEntity.noContent().build();
