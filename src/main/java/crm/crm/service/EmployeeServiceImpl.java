@@ -5,18 +5,16 @@ import crm.crm.Exception.ResourceNotFoundException;
 import crm.crm.entity.Employee;
 import crm.crm.mapper.EmployeeMapper;
 import crm.crm.repository.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-abstract class EmployeeServiceImpl implements EmployeeService {
-    @Autowired
+@Service @AllArgsConstructor
+public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
-    @Autowired
-    private EmployeeMapper employeeMapper;
+    private final EmployeeMapper employeeMapper;
 
     @Override
     public List<EmployeeDTO> getAllEmployees() {
@@ -52,12 +50,9 @@ abstract class EmployeeServiceImpl implements EmployeeService {
         return employeeMapper.employeeToEmployeeDTO(updatedEmployee);
     }
 
-    public Employee updateEmployee(Long id, Employee employeeDetails) {
-        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
-        employee.setName(employeeDetails.getName());
-        employee.setEmail(employeeDetails.getEmail());
-        employee.setPosition(employeeDetails.getPosition());
-        // autres champs
-        return employeeRepository.save(employee);
+    @Override
+    public void deleteEmployee(Long id) {
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+        employeeRepository.delete(employee);
     }
 }
