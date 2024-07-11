@@ -1,7 +1,8 @@
 package crm.crm.controller;
 
-import crm.crm.DTO.EmployeeDTO;
+import crm.crm.entity.Employee;
 import crm.crm.service.EmployeeService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,33 +10,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-
+@AllArgsConstructor
 @RequestMapping("/employees")
 
 public class EmployeeController {
-    @Autowired
+
     private EmployeeService employeeService;
 
     @GetMapping("/list")
-    public List<EmployeeDTO> getAllEmployees() {
+    public List<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable Long id) {
-        EmployeeDTO employeeDTO = employeeService.getEmployeeById(id);
-        return ResponseEntity.ok(employeeDTO);
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
+        Employee employee = employeeService.getEmployeeById(id);
+        return ResponseEntity.ok(employee);
     }
 
     @PostMapping("/createEmployee")
-    public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        EmployeeDTO createdEmployee = employeeService.createEmployee(employeeDTO);
+    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
+        Employee createdEmployee = employeeService.createEmployee(employee);
         return ResponseEntity.ok(createdEmployee);
     }
 
     @PutMapping("/updateEmployee/{id}")
-    public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable Long id, @RequestBody EmployeeDTO employeeDTO) {
-        EmployeeDTO updatedEmployee = employeeService.updateEmployee(id, employeeDTO);
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
+        Employee updatedEmployee = employeeService.updateEmployee(id, employee);
         return ResponseEntity.ok(updatedEmployee);
     }
 

@@ -1,10 +1,9 @@
 package crm.crm.service;
 
-import crm.crm.DTO.LeaveRequestDTO;
 import crm.crm.Exception.ResourceNotFoundException;
 import crm.crm.entity.LeaveRequest;
-import crm.crm.mapper.LeaveRequestMapper;
 import crm.crm.repository.LeaveRequestRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,46 +11,43 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class LeaveRequestServiceImpl implements LeaveRequestService {
 
-    @Autowired
+
     private LeaveRequestRepository leaveRequestRepository;
 
 
-    private LeaveRequestMapper leaveRequestMapper;
 
     @Override
-    public LeaveRequestDTO createLeaveRequest(LeaveRequestDTO leaveRequestDTO) {
-        LeaveRequest leaveRequest = leaveRequestMapper.leaveRequestDTOToLeaveRequest(leaveRequestDTO);
+    public LeaveRequest createLeaveRequest(LeaveRequest leaveRequest) {
         LeaveRequest savedLeaveRequest = leaveRequestRepository.save(leaveRequest);
-        return leaveRequestMapper.leaveRequestToLeaveRequestDTO(savedLeaveRequest);
+        return savedLeaveRequest;
     }
 
     @Override
-    public LeaveRequestDTO updateLeaveRequest(Long id, LeaveRequestDTO leaveRequestDTO) {
-        LeaveRequest leaveRequest = leaveRequestRepository.findById(id)
+    public LeaveRequest updateLeaveRequest(Long id, LeaveRequest leaveRequest) {
+        LeaveRequest leaveRequest1 = leaveRequestRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("LeaveRequest not found"));
 
-        leaveRequest.setStartDate(leaveRequestDTO.getStartDate());
-        leaveRequest.setEndDate(leaveRequestDTO.getEndDate());
-        leaveRequest.setLeaveType(leaveRequestDTO.getLeaveType());
+        leaveRequest1.setStartDate(leaveRequest.getStartDate());
+        leaveRequest1.setEndDate(leaveRequest.getEndDate());
+        leaveRequest1.setLeaveType(leaveRequest.getLeaveType());
 
         LeaveRequest updatedLeaveRequest = leaveRequestRepository.save(leaveRequest);
-        return leaveRequestMapper.leaveRequestToLeaveRequestDTO(updatedLeaveRequest);
+        return updatedLeaveRequest;
     }
 
     @Override
-    public List<LeaveRequestDTO> getAllLeaveRequests() {
-        return leaveRequestRepository.findAll().stream()
-                .map(leaveRequestMapper::leaveRequestToLeaveRequestDTO)
-                .collect(Collectors.toList());
+    public List<LeaveRequest> getAllLeaveRequests() {
+        return leaveRequestRepository.findAll();
     }
 
     @Override
-    public LeaveRequestDTO getLeaveRequestById(Long id) {
+    public LeaveRequest getLeaveRequestById(Long id) {
         LeaveRequest leaveRequest = leaveRequestRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("LeaveRequest not found"));
-        return leaveRequestMapper.leaveRequestToLeaveRequestDTO(leaveRequest);
+        return leaveRequest;
     }
 
     @Override

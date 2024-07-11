@@ -1,6 +1,5 @@
 package crm.crm.controller;
 
-import crm.crm.DTO.LeaveRequestDTO;
 import crm.crm.entity.LeaveRequest;
 import crm.crm.service.LeaveRequestService;
 import crm.crm.service.LeaveRequestServiceImpl;
@@ -21,25 +20,25 @@ public class LeaveRequestController {
     private final LeaveRequestService leaveRequestService;
 
     @PostMapping("/createLeaveRequest")
-    public ResponseEntity<LeaveRequestDTO> createLeaveRequest(@RequestBody LeaveRequestDTO leaveRequestDTO) {
-        LeaveRequestDTO createdLeaveRequest = leaveRequestService.createLeaveRequest(leaveRequestDTO);
+    public ResponseEntity<LeaveRequest> createLeaveRequest(@RequestBody LeaveRequest leaveRequestDTO) {
+        LeaveRequest createdLeaveRequest = leaveRequestService.createLeaveRequest(leaveRequestDTO);
         return new ResponseEntity<>(createdLeaveRequest, HttpStatus.CREATED);
     }
 
     @PutMapping("/updateLeaveRequest/{id}")
-    public ResponseEntity<LeaveRequestDTO> updateLeaveRequest(@PathVariable Long id, @RequestBody LeaveRequestDTO leaveRequestDTO) {
-        LeaveRequestDTO updatedLeaveRequest = leaveRequestService.updateLeaveRequest(id, leaveRequestDTO);
+    public ResponseEntity<LeaveRequest> updateLeaveRequest(@PathVariable Long id, @RequestBody LeaveRequest leaveRequestDTO) {
+        LeaveRequest updatedLeaveRequest = leaveRequestService.updateLeaveRequest(id, leaveRequestDTO);
         return new ResponseEntity<>(updatedLeaveRequest, HttpStatus.OK);
     }
 
     @GetMapping("/List")
-    public List<LeaveRequestDTO> getAllLeaveRequests() {
+    public List<LeaveRequest> getAllLeaveRequests() {
         return leaveRequestService.getAllLeaveRequests();
     }
 
     @GetMapping("/getLeaveRequestById/{id}")
-    public ResponseEntity<LeaveRequestDTO> getLeaveRequestById(@PathVariable Long id) {
-        LeaveRequestDTO leaveRequestDTO = leaveRequestService.getLeaveRequestById(id);
+    public ResponseEntity<LeaveRequest> getLeaveRequestById(@PathVariable Long id) {
+        LeaveRequest leaveRequestDTO = leaveRequestService.getLeaveRequestById(id);
         return new ResponseEntity<>(leaveRequestDTO, HttpStatus.OK);
     }
 

@@ -1,7 +1,6 @@
 package crm.crm.controller;
+import crm.crm.entity.Contrat;
 
-import crm.crm.DTO.ContratDTO;
-import crm.crm.mapper.ContratMapper;
 import crm.crm.service.ContratService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,24 +16,24 @@ public class ContratController {
     private ContratService contractService;
 
     @GetMapping("/List")
-    public List<ContratDTO> getAllContracts() {
+    public List<Contrat> getAllContracts() {
         return contractService.getAllContracts();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ContratDTO> getContractById(@PathVariable Long id) {
-        ContratDTO contractDTO = contractService.getContractById(id);
-        return ResponseEntity.ok(contractDTO);
+    public ResponseEntity<Contrat> getContractById(@PathVariable Long id) {
+        Contrat contract = contractService.getContractById(id);
+        return ResponseEntity.ok(contract);
     }
 
     @PostMapping("/createContrat")
-    public ContratDTO createContract(@RequestBody ContratDTO contractDTO) {
+    public Contrat createContract(@RequestBody Contrat contractDTO) {
         return contractService.createContract(contractDTO);
     }
 
     @PutMapping("/updateContrat/{id}")
-    public ContratDTO updateContract(@PathVariable Long id, @RequestBody ContratDTO contractDTO) {
-        return contractService.updateContract(id, contractDTO);
+    public Contrat updateContract(@PathVariable Long id, @RequestBody Contrat contract) {
+        return contractService.updateContract(id, contract);
     }
 
     @DeleteMapping("/deleteContrat/{id}")

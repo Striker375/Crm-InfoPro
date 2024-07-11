@@ -1,9 +1,10 @@
 package crm.crm.service;
-import crm.crm.DTO.ContratDTO;
+
 import crm.crm.Exception.ResourceNotFoundException;
 import crm.crm.entity.Contrat;
-import crm.crm.mapper.ContratMapper;
+
 import crm.crm.repository.ContratRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,31 +12,28 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@Service
+@Service @AllArgsConstructor
 public class ContratServiceImpl implements ContratService {
-    @Autowired
+
     private ContratRepository contratRepository;
-    @Autowired
-    private ContratMapper contratMapper;
+
     @Override
 
-    public List<ContratDTO> getAllContracts() {
-        return contratRepository.findAll().stream()
-                .map(contratMapper::contratToContratDTO)
-                .collect(Collectors.toList());
+    public List<Contrat> getAllContracts() {
+        return contratRepository.findAll();
     }
     @Override
-    public ContratDTO getContractById(Long id) {
+    public Contrat getContractById(Long id) {
         Contrat contract = contratRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Contract not found"));
-        return contratMapper.contratToContratDTO(contract);
+        return contract;
     }
 
     @Override
-    public ContratDTO createContract(ContratDTO contractDTO) {
-        Contrat contract = contratMapper.contratDTOToContrat(contractDTO);
-        Contrat savedContract = contratRepository.save(contract);
-        return contratMapper.contratToContratDTO(savedContract);
+    public Contrat createContract(Contrat contrat) {
+
+        Contrat savedContract = contratRepository.save(contrat);
+        return savedContract;
     }
     @Override
     public void deleteContract(Long id) {
@@ -44,16 +42,16 @@ public class ContratServiceImpl implements ContratService {
     }
 
     @Override
-    public ContratDTO updateContract(Long id, ContratDTO contractDTO) {
+    public Contrat updateContract(Long id, Contrat contrat) {
         Contrat contract = contratRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Contract not found"));
 
         // Map the DTO fields to the existing contract entity
-        contractDTO.setStartDate(contractDTO.getStartDate());
-        contractDTO.setEndDate(contractDTO.getEndDate());
+        contract.setStartDate(contract.getStartDate());
+        contract.setEndDate(contract.getEndDate());
 
 
         Contrat updatedContract = contratRepository.save(contract);
-        return contratMapper.contratToContratDTO(updatedContract);
+        return updatedContract;
     }
 }

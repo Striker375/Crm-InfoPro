@@ -1,6 +1,6 @@
 package crm.crm.controller;
 
-import crm.crm.DTO.CalenderEventDTO;
+import crm.crm.entity.CalenderEvent;
 import crm.crm.service.CalendarEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,25 +20,25 @@ public class CalenderEventController {
     }
 
     @GetMapping("/CalenderEvents/List")
-    public List<CalenderEventDTO> getAllCalenderEvents() {
+    public List<CalenderEvent> getAllCalenderEvents() {
         return calendarEventService.getAllCalenderEvents();
     }
 
     @GetMapping("/CalendarEvent/{id}")
-    public ResponseEntity<CalenderEventDTO> getCalendarEventById(@PathVariable Long id) {
-        CalenderEventDTO calenderEventDTO = calendarEventService.getCalendarEventById(id);
-        return ResponseEntity.ok(calenderEventDTO);
+    public ResponseEntity<CalenderEvent> getCalendarEventById(@PathVariable Long id) {
+        CalenderEvent calenderEvent = calendarEventService.getCalendarEventById(id);
+        return ResponseEntity.ok(calenderEvent);
     }
 
     @PostMapping("/calenderEvent/create")
-    public ResponseEntity<CalenderEventDTO> createCalendarEvent(@RequestBody CalenderEventDTO calenderEventDTO) {
-        CalenderEventDTO createdCalenderEvent = calendarEventService.createCalendarEvent(calenderEventDTO);
+    public ResponseEntity<CalenderEvent> createCalendarEvent(@RequestBody CalenderEvent calenderEvent) {
+        CalenderEvent createdCalenderEvent = calendarEventService.createCalendarEvent(calenderEvent);
         return ResponseEntity.ok(createdCalenderEvent);
     }
 
     @PutMapping("/calenderEvent/update/{id}")
-    public ResponseEntity<CalenderEventDTO> updateCalendarEvent(@PathVariable Long id, @RequestBody CalenderEventDTO calenderEventDTO) {
-        CalenderEventDTO updatedCalenderEvent = calendarEventService.updateCalendarEvent(id, calenderEventDTO);
+    public ResponseEntity<CalenderEvent> updateCalendarEvent(@PathVariable Long id, @RequestBody CalenderEvent calenderEvent) {
+        CalenderEvent updatedCalenderEvent = calendarEventService.updateCalendarEvent(id, calenderEvent);
         return ResponseEntity.ok(updatedCalenderEvent);
     }
 

@@ -1,48 +1,38 @@
 package crm.crm.service;
 
-import crm.crm.DTO.CalenderEventDTO;
 import crm.crm.Exception.ResourceNotFoundException;
 import crm.crm.entity.CalenderEvent;
-import crm.crm.mapper.CalendarEventMapper;
 import crm.crm.repository.CalenderEventRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Service
+@Service @AllArgsConstructor
 public class CalendarEventServiceImpl implements CalendarEventService {
-    @Autowired
     private CalenderEventRepository calendarEventRepository;
 
-    private CalendarEventMapper calendarEventMapper ;
-
     @Override
-    public List<CalenderEventDTO> getAllCalenderEvents() {
-        return calendarEventRepository.findAll().stream()
-                .map(calendarEventMapper::calenderEventToCalenderEventDTO)
-                .collect(Collectors.toList());
+    public List<CalenderEvent> getAllCalenderEvents() {
+        return calendarEventRepository.findAll();
     }
 
     @Override
-    public CalenderEventDTO getCalendarEventById(Long id) {
+    public CalenderEvent getCalendarEventById(Long id) {
         CalenderEvent calendarEvent = calendarEventRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("CalendarEvent not found"));
-        return calendarEventMapper.calenderEventToCalenderEventDTO(calendarEvent);
+        return calendarEvent;
     }
 
 
-    public CalenderEventDTO createCalendarEvent(CalenderEventDTO calenderEventDTO) {
-        // Convert DTO to entity
-        CalenderEvent calendarEvent = calendarEventMapper.calenderEventDTOToCalenderEvent(calenderEventDTO);
+    public CalenderEvent createCalendarEvent(CalenderEvent calenderEvent) {
 
         // Save the entity
-        CalenderEvent savedCalendarEvent = calendarEventRepository.save(calendarEvent);
+        CalenderEvent savedCalendarEvent = calendarEventRepository.save(calenderEvent);
 
         // Convert saved entity back to DTO
-        return calendarEventMapper.calenderEventToCalenderEventDTO(savedCalendarEvent);
+        return savedCalendarEvent;
     }
     @Override
     public void deleteCalendarEvent(Long id) {
@@ -51,14 +41,14 @@ public class CalendarEventServiceImpl implements CalendarEventService {
     }
 
     @Override
-    public CalenderEventDTO updateCalendarEvent(Long id, CalenderEventDTO calenderEventDTO) {
+    public CalenderEvent updateCalendarEvent(Long id, CalenderEvent calenderEvent) {
         CalenderEvent calendarEvent = calendarEventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("CalendarEvent not found"));
-        calendarEvent.setTitle(calenderEventDTO.getTitle());
-        calendarEvent.setDescription(calenderEventDTO.getDescription());
-        calendarEvent.setStartTime(calenderEventDTO.getStartTime());
-        calendarEvent.setEndTime(calenderEventDTO.getEndTime());
+        calendarEvent.setTitle(calenderEvent.getTitle());
+        calendarEvent.setDescription(calenderEvent.getDescription());
+        calendarEvent.setStartTime(calenderEvent.getStartTime());
+        calendarEvent.setEndTime(calenderEvent.getEndTime());
         // autres champs
         CalenderEvent updatedCalendarEvent = calendarEventRepository.save(calendarEvent);
-        return calendarEventMapper.calenderEventToCalenderEventDTO(updatedCalendarEvent);
+        return updatedCalendarEvent;
     }
 }

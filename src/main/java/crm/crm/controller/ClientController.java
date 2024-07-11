@@ -1,6 +1,6 @@
 package crm.crm.controller;
 
-import crm.crm.DTO.ClientDTO;
+import crm.crm.entity.Client;
 import crm.crm.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,25 +16,25 @@ public class ClientController {
     private ClientService clientService;
 
     @GetMapping("/Client/List")
-    public List<ClientDTO> getAllClients() {
+    public List<Client> getAllClients() {
         return clientService.getAllClients();
     }
 
     @GetMapping("/Client/{id}")
-    public ResponseEntity<ClientDTO> getClientById(@PathVariable Long id) {
-        ClientDTO clientDTO = clientService.getClientById(id);
-        return ResponseEntity.ok(clientDTO);
+    public ResponseEntity<Client> getClientById(@PathVariable Long id) {
+        Client client = clientService.getClientById(id);
+        return ResponseEntity.ok(client);
     }
 
     @PostMapping("/Client/createClient")
-    public ResponseEntity<ClientDTO> createClient(@RequestBody ClientDTO clientDTO) {
-        ClientDTO createdClient = clientService.createClient(clientDTO);
+    public ResponseEntity<Client> createClient(@RequestBody Client client) {
+        Client createdClient = clientService.createClient(client);
         return ResponseEntity.ok(createdClient);
     }
 
     @PutMapping("/Client/updateClient/{id}")
-    public ResponseEntity<ClientDTO> updateClient(@PathVariable Long id, @RequestBody ClientDTO clientDTO) {
-        ClientDTO updatedClient = clientService.updateClient(id, clientDTO);
+    public ResponseEntity<Client> updateClient(@PathVariable Long id, @RequestBody Client clientDTO) {
+        Client updatedClient = clientService.updateClient(id, clientDTO);
         return ResponseEntity.ok(updatedClient);
     }
 
