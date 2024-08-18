@@ -16,8 +16,5 @@ public class Client {
     private String name;
     private String email;
     private String adresse;
-    private Long phoneNumber;
-    // Autres champs pertinents
-
-    // Getters et setters
+    private String phoneNumber;
 }

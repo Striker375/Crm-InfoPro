@@ -4,15 +4,13 @@ import crm.crm.Exception.ResourceNotFoundException;
 import crm.crm.entity.LeaveRequest;
 import crm.crm.repository.LeaveRequestRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class LeaveRequestServiceImpl implements LeaveRequestService {
+public class   LeaveRequestServiceImpl implements LeaveRequestService {
 
 
     private LeaveRequestRepository leaveRequestRepository;

@@ -26,8 +26,4 @@ public class Contrat {
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
-
-    // Autres champs pertinents
-
-    // Getters et setters
 }
