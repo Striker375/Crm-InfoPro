@@ -2,14 +2,13 @@ package crm.crm.controller;
 
 import crm.crm.entity.Client;
 import crm.crm.service.ClientService;
-import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/clients")
 public class ClientController {
     private final ClientService clientService;
@@ -54,9 +53,19 @@ public class ClientController {
         return "redirect:/clients/list";
     }
 
+    @GetMapping("/delete/{id}")
+    public String showDeleteForm(@PathVariable Long id, Model model) {
+        Client client = clientService.getClientById(id);
+        if (client == null) {
+            throw new RuntimeException("Client not found for id :: " + id);
+        }
+        model.addAttribute("client", client);
+        return "delete-client";
+    }
+
     @PostMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
+    public String deleteClient(@PathVariable Long id) {
         clientService.deleteClient(id);
-        return ResponseEntity.noContent().build();
+        return "redirect:/clients/list";
     }
 }
